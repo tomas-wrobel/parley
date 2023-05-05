@@ -11,8 +11,8 @@
 		"sass": "1.62.0",
 		"typescript": "5.0.4"
 	},
-	"main": "dist/parley.js",
-	"types": "src/parley.ts",
+	"main": "dist/index.js",
+	"types": "src/index.ts",
 	"scripts": {
 		"build": "tsc && sass src:dist --no-source-map"
 	}
