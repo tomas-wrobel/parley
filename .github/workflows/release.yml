@@ -48,11 +48,9 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
       - name: Install doc generators
-        run: npm install --global @microsoft/api-extractor @microsoft/api-documenter typescript
-      - name: Generate lib file
-        run: tsc --declaration --emitDeclarationOnly --declarationDir lib
+        run: npm install typedoc --save-dev
       - name: Generate docs
-        run: api-extractor init && api-extractor run && api-documenter markdown -o ./docs
+        run: npx typedoc --out docs src/index.ts
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
