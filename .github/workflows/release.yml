@@ -32,3 +32,5 @@ jobs:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       - name: Publish to GitHub
         run: gh release create v${{steps.package.outputs.current-version}} dist/*
+        env:
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
