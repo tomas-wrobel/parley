@@ -6,7 +6,8 @@
 		"module": "None",
 		"outDir": "dist",
 		"removeComments": true,
-		
+		"declarationDir": "lib",
+		"declaration": true
 	},
 	"files": [
 		"src/index.ts"
