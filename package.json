@@ -1,6 +1,6 @@
 {
 	"name": "parley.js",
-	"version": "1.0.8",
+	"version": "1.0.9",
 	"license": "MIT",
 	"author": {
 		"name": "Tomáš Wróbel",
@@ -12,7 +12,7 @@
 		"typescript": "5.0.4"
 	},
 	"main": "dist/index.js",
-	"types": "lib/index.d.ts",
+	"types": "src/index.ts",
 	"scripts": {
 		"build": "tsc && sass src:dist --no-source-map"
 	}

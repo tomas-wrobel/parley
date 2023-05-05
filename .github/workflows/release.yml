@@ -48,7 +48,9 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
       - name: Install doc generators
-        run: npm install --global @microsoft/api-extractor @microsoft/api-documenter
+        run: npm install --global @microsoft/api-extractor @microsoft/api-documenter typescript
+      - name: Generate lib file
+        run: tsc --declaration --emitDeclarationOnly --declarationDir lib
       - name: Generate docs
         run: api-extractor init && api-extractor run && api-documenter markdown -o ./docs
       - name: Setup Pages

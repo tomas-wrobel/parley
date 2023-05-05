@@ -5,9 +5,7 @@
 		"alwaysStrict": true,
 		"module": "None",
 		"outDir": "dist",
-		"removeComments": true,
-		"declarationDir": "lib",
-		"declaration": true
+		"removeComments": true
 	},
 	"files": [
 		"src/index.ts"
