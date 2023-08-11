@@ -28,9 +28,7 @@ Note it must be a classic script, not a module.
 You should also include CSS:
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/parley.js/dist/layout.css" />
-<!-- Next line is optional -->
-<link rel="stylesheet" href="https://unpkg.com/parley.js/dist/basic.css" />
+<link rel="stylesheet" href="https://unpkg.com/parley.js/dist/default.css" />
 ```
 
 ### `Parley.fire`

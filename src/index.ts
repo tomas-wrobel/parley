@@ -35,6 +35,7 @@ class Parley {
         this.element.appendChild(this.title);
         this.element.appendChild(this.message);
         this.element.appendChild(this.form);
+        this.element.classList.add("parley");
 
         this.form.action = `javascript:${this.name}.close()`;
         this.cancelButton.formMethod = "dialog";
@@ -44,13 +45,14 @@ class Parley {
 
         (root || document.body).appendChild(this.element);
     }
+    
     /**
      * Creates a prompt dialog.
      * @template I The input type.
      * @param options The options of the dialog.
      * @returns A promise that resolves to the input value or false if the dialog was cancelled.
      */
-    public static fire<I extends keyof Parley.Inputs>(options: Parley.Options<I>) {
+    public static async fire<I extends keyof Parley.Inputs>(options: Parley.Options<I>) {
         if (!this.element.parentElement) {
             this.init();
         } else {
@@ -156,15 +158,30 @@ class Parley {
         }
 
         this.title.innerHTML = options.title || "";
-        this.message.innerHTML = options.message || "";
+        
         this.cancelButton.innerHTML = options.cancelButtonHTML || "";
-        this.confirmButton.innerHTML = options.confirmButtonHTML || "OK";
+        this.confirmButton.innerHTML = options.confirmButtonHTML ?? "OK";
+
+        this.confirmButton.style.background = "var(--parley-primary)";
+        this.cancelButton.style.background = "var(--parley-inactive)";
 
         const buttonContainer = document.createElement("div");
         buttonContainer.appendChild(this.confirmButton);
         buttonContainer.appendChild(this.cancelButton);
         buttonContainer.className = "button-container";
         this.form.appendChild(buttonContainer);
+        
+        this.element.showModal();
+
+        if (options.builder) {
+            this.message.innerHTML = "<div class='parley-loader'></div>";
+            const body = await options.builder();
+            this.message.innerHTML = "";
+            this.message.append(body);
+        } else if (options.body) {
+            this.message.innerHTML = "";
+            this.message.append(options.body);
+        }
 
         return new Promise<Parley.Inputs[I][0] | false>(resolve => {
             this.element.addEventListener(
@@ -175,7 +192,6 @@ class Parley {
                 },
                 {once: true}
             );
-            this.element.showModal();
         });
     }
     /**
@@ -224,6 +240,8 @@ class Parley {
 }
 
 declare namespace Parley {
+    type Property<T> = T | (() => T) | Promise<T> | (() => Promise<T>);
+
     /**
      * Map of input types to their options.
      */
@@ -249,10 +267,20 @@ declare namespace Parley {
          */
         title?: string;
         /**
-         * The HTML message of the dialog.
+         * The body of the dialog.
+         * Does not support HTML
+         * but supports DOM elements.
          * @default ""
          */
-        message?: string;
+        body?: string | Element;
+        /**
+         * Async function that returns the body of the dialog.
+         * `body` property is ignored if this is set.
+         * While this function is running, 
+         * the dialog shows a loading indicator.
+         * @returns The body of the dialog.
+         */
+        builder?: () => Promise<string | Element>;
         /**
          * The HTML content of the dialog.
          * @default "Cancel"
@@ -279,6 +307,11 @@ declare namespace Parley {
          * * radio
          */
         inputOptions?: Inputs[I][1];
+        /**
+         * Whether to reverse the buttons.
+         * @default false
+         */
+        reverseButtons?: boolean;
     }
 
     interface NumberOptions {
