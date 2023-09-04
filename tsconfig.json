@@ -3,9 +3,15 @@
 		"strict": true,
 		"target": "ES2015",
 		"alwaysStrict": true,
-		"module": "None",
-		"outDir": "dist",
-		"removeComments": true
+		"module": "ES2015",
+		"outDir": "lib",
+		"declaration": true,
+		"sourceMap": true,
+		"declarationMap": true,
+		"lib": [
+			"DOM",
+			"ES2015"
+		]
 	},
 	"files": [
 		"src/index.ts"
