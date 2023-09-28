@@ -1,6 +1,6 @@
 # Parley.js
 
-![size](https://badgen.net/bundlephobia/minzip/parley.js)
+[![install size](https://packagephobia.com/badge?p=parley.js)](https://packagephobia.com/result?p=parley.js)
 
 ## An oversimplified library for HTML5 dialogs
 
