@@ -1,6 +1,6 @@
 /**
  * @license MIT
- * @version 1.0
+ * @version 1.1.0
  * @description A simple dialog utility for the web.
  * @example
  * ```ts
@@ -24,8 +24,6 @@ class Parley {
 	protected static title = document.createElement("h2");
 	protected static form = document.createElement("form");
 	protected static message = document.createElement("p");
-	protected static confirmButton = document.createElement("button");
-	protected static cancelButton = document.createElement("button");
 	/**
 	 * Initializes the dialog DOM. Automatically called
 	 * by {@link fire} if you have not initialized yet
@@ -38,11 +36,6 @@ class Parley {
 		this.element.classList.add("parley");
 
 		this.form.action = `javascript:${this.name}.close();`;
-		this.cancelButton.formMethod = "dialog";
-		this.cancelButton.type = "submit";
-		this.cancelButton.value = "false";
-		this.confirmButton.type = "submit";
-
 		(root || document.body).appendChild(this.element);
 	}
 
@@ -157,18 +150,31 @@ class Parley {
 			this.form.appendChild(input);
 		}
 
-		this.title.innerHTML = options.title || "";
-
-		this.cancelButton.innerHTML = options.cancelButtonHTML || "";
-		this.confirmButton.innerHTML = options.confirmButtonHTML ?? "OK";
-
-		this.confirmButton.style.background = "var(--parley-primary)";
-		this.cancelButton.style.background = "var(--parley-inactive)";
+		this.title.innerHTML = "";
+		options.title && this.title.append(options.title);
 
 		const buttonContainer = document.createElement("div");
-		buttonContainer.appendChild(this.confirmButton);
-		buttonContainer.appendChild(this.cancelButton);
 		buttonContainer.className = "button-container";
+
+		if (options.cancelButton !== false) {
+			const cancelButton = document.createElement("button");
+			cancelButton.formMethod = "dialog";
+			cancelButton.type = "submit";
+			cancelButton.value = "false";
+			cancelButton.style.background = "var(--parley-inactive)";
+			cancelButton.append(options.cancelButton ?? "Cancel");
+			buttonContainer.appendChild(cancelButton);
+		}
+
+		if (options.confirmButton !== false) {
+			const confirmButton = document.createElement("button");
+			confirmButton.formMethod = "dialog";
+			confirmButton.type = "submit";
+			confirmButton.value = "true";
+			confirmButton.style.background = "var(--parley-primary)";
+			confirmButton.append(options.confirmButton ?? "OK");
+			buttonContainer.appendChild(confirmButton);
+		}
 
 		this.element.showModal();
 
@@ -183,7 +189,7 @@ class Parley {
 		}
 
 		this.form.appendChild(buttonContainer);
-		
+
 		return new Promise<Parley.Inputs[I][0] | false>(resolve => {
 			this.element.addEventListener(
 				"close",
@@ -263,17 +269,19 @@ declare namespace Parley {
 
 	interface Options<I extends keyof Inputs = any> {
 		/**
-		 * The HTML title of the dialog.
-		 * @default ""
+		 * The title of the dialog.
+		 * Does not support HTML strings,
+		 * but supports DOM elements.
+		 * If not set, the title will not be shown.
 		 */
-		title?: string;
+		title?: string | HTMLElement;
 		/**
 		 * The body of the dialog.
-		 * Does not support HTML
+		 * Does not support HTML strings,
 		 * but supports DOM elements.
 		 * @default ""
 		 */
-		body?: string | Element;
+		body?: string | HTMLElement;
 		/**
 		 * Async function that returns the body of the dialog.
 		 * `body` property is ignored if this is set.
@@ -283,15 +291,21 @@ declare namespace Parley {
 		 */
 		builder?: () => Promise<string | Element>;
 		/**
-		 * The HTML content of the dialog.
+		 * Cancel button content.
+		 * If string, creates a button with the text.
+		 * If HTMLElement, appends the element to the but.
+		 * If false, the button will not be shown.
 		 * @default "Cancel"
 		 */
-		cancelButtonHTML?: string;
+		cancelButton?: string | HTMLElement | false;
 		/**
-		 * The HTML content of the dialog.
+		 * Confirm button content.
+		 * If string, creates a button with the text.
+		 * If HTMLElement, appends the element to the dialog.
+		 * If false, the button will not be shown.
 		 * @default "OK"
 		 */
-		confirmButtonHTML?: string;
+		confirmButton?: string | HTMLElement | false;
 		/**
 		 * The input type of the dialog.
 		 */
@@ -308,11 +322,6 @@ declare namespace Parley {
 		 * * radio
 		 */
 		inputOptions?: Inputs[I][1];
-		/**
-		 * Whether to reverse the buttons.
-		 * @default false
-		 */
-		reverseButtons?: boolean;
 	}
 
 	interface NumberOptions {

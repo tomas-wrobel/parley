@@ -1,5 +1,7 @@
 # Parley.js
 
+![size](https://badgen.net/bundlephobia/minzip/parley.js)
+
 ## An oversimplified library for HTML5 dialogs
 
 Parley.js is a small utility replacing `window.prompt` and `window.confirm`.
@@ -41,10 +43,11 @@ always false.
 
 | Name                | Description                                  | Default     |
 | ------------------- | -------------------------------------------- | ----------- |
-| `title`             | The title displayed in parley. Supports HTML | `""`        |
+| `title`             | The title displayed in parley.               | `""`        |
 | `message`           | The HTML message of the parley.              | `""`        |
-| `cancelButtonHTML`  | The HTML content of the cancel button.       | `Cancel"`   |
-| `confirmButtonHTML` | The HTML content of the confirm button.      | `"OK"`      |
+| `builder`           | The asynchronous function returning body.    | `undefined` |
+| `cancelButton`      | The content of the cancel button.            | `"Cancel"`  |
+| `confirmButton`     | The content of the confirm button.           | `"OK"`      |
 | `value`             | The default value.                           | `undefined` |
 | `inputOptions`      | The input-type-specific; see bellow          | {}          |
 

@@ -4,10 +4,11 @@
 		"target": "ES2015",
 		"alwaysStrict": true,
 		"module": "ES2015",
-		"outDir": "lib",
+		"outDir": "dist",
 		"declaration": true,
 		"sourceMap": true,
 		"declarationMap": true,
+		"removeComments": true,
 		"lib": [
 			"DOM",
 			"ES2015"
