@@ -1,7 +1,8 @@
 {
 	"name": "parley.js",
-	"version": "1.0.14",
+	"version": "2.0.0",
 	"license": "MIT",
+	"type": "module",
 	"author": {
 		"name": "Tomáš Wróbel",
 		"email": "tomaswrobel.dev@gmail.com",
@@ -11,9 +12,12 @@
 		"sass": "1.62.0",
 		"typescript": "5.0.4"
 	},
-	"main": "dist/index.js",
-	"types": "src/index.ts",
+	"main": "dist/parley.js",
+	"types": "dist/parley.d.ts",
 	"scripts": {
-		"build": "tsc && sass src:dist --no-source-map"
-	}
+		"build": "tsc && sass src:dist"
+	},
+	"files": [
+		"dist"
+	]
 }

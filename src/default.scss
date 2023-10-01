@@ -4,10 +4,6 @@
 }
 
 dialog.parley {
-	&:not(:modal) {
-		animation: none;
-	}
-
 	font-family: sans-serif;
 	text-align: center;
 	border: none;

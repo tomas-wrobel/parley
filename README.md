@@ -6,29 +6,36 @@ Parley.js is a small utility replacing `window.prompt` and `window.confirm`.
 
 ## Minimum requirements
 
-The `Parley` class cannot be placed inside a module. It must be globally available.
-
 |            | Needs      | Version | MDN                           |
 | ---------- | ---------- | ------- | ----------------------------- |
 | ECMAScript | `Promise`  | ES2015  | [see](https://mdn.io/Promise) |
 | HTML       | `<dialog>` | HTML5   | [see](https://mdn.io/dialog)  |
 
-If you do not use transpiler like Babel or TypeScript, note that code uses ES6 class.
+Without Babel, code also needs `async` and `await` keywords (ES2017).
 
-## API
+## Usage
 
-Everything starts with `<script>` tag:
-
-```html
-<script src="https://unpkg.com/parley.js"></script>
+```js
+import * as Parley from "parley.js";
+import "parley.js/dist/default.css";
+// ...
 ```
 
-Note it must be a classic script, not a module.
+If you have a bundler that supports SCSS and TypeScript, you can import the source files directly:
 
-You should also include CSS:
+```js
+import * as Parley from "parley.js/src";
+// ...
+```
+
+Also, you can use UNPKG:
 
 ```html
 <link rel="stylesheet" href="https://unpkg.com/parley.js/dist/default.css" />
+<script type="module">
+    import * as Parley from "https://unpkg.com/parley.js";
+    // ...
+</script>
 ```
 
 ### `Parley.fire`
