@@ -16,15 +16,8 @@ Without Babel, code also needs `async` and `await` keywords (ES2017).
 ## Usage
 
 ```js
-import * as Parley from "parley.js";
+import Parley from "parley.js";
 import "parley.js/dist/default.css";
-// ...
-```
-
-If you have a bundler that supports SCSS and TypeScript, you can import the source files directly:
-
-```js
-import * as Parley from "parley.js/src";
 // ...
 ```
 
@@ -33,7 +26,7 @@ Also, you can use UNPKG:
 ```html
 <link rel="stylesheet" href="https://unpkg.com/parley.js/dist/default.css" />
 <script type="module">
-    import * as Parley from "https://unpkg.com/parley.js";
+    import Parley from "https://unpkg.com/parley.js";
     // ...
 </script>
 ```
@@ -100,3 +93,16 @@ interface SelectionOptions {
 
 Both functions close the parley immediately. While `Parley.cancel()` causes to return `false`,
 `Parley.close()` returns the user value.
+
+### Constructing other dialogs
+
+Sometimes, you need to theme multiple dialogs. You can use the `Dialog` class to create a dialog
+
+```js
+import {Dialog} from "parley.js";
+
+const dialog = new Dialog("system");
+
+// Dialog has class "system"
+// Loader has class "system-loader"
+```

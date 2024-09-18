@@ -13,6 +13,7 @@
 		]
 	},
 	"files": [
-		"src/parley.ts"
+		"src/index.ts",
+		"src/dialog.ts"
 	]
 }
